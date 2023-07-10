@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +22,16 @@ public class ClientController {
     private ClientService clientService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
     @PostMapping("/register")
     public ResponseEntity<Client> save(@Valid @RequestBody Client client){
+        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
+        client.setPassword(encodedPassword);
         this.clientService.save(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
