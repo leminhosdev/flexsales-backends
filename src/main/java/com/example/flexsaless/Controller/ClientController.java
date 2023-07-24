@@ -1,6 +1,7 @@
 package com.example.flexsaless.Controller;
 
 import com.example.flexsaless.Entitiy.Client;
+import com.example.flexsaless.Entitiy.ExcelFile;
 import com.example.flexsaless.Security.TokenService;
 import com.example.flexsaless.Service.ClientService;
 import jakarta.validation.Valid;
@@ -49,13 +50,9 @@ public class ClientController {
         return tokenService.gerarToken(client);
     }
 
-    @PutMapping("/uploadfile")
-    public ResponseEntity<String> uploadFile(@RequestParam("excel")MultipartFile file){
-      try{  this.clientService.uploadFile();
-        return ResponseEntity.ok("file saved!");
-    }catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving file.");
-    }
+    @PostMapping("/uploadfile")
+    public ExcelFile uploadFile(@RequestParam("excel")MultipartFile file) throws Exception{
+     return clientService.uploadFile(file);
     }
 
     @GetMapping("/getloggeduser")

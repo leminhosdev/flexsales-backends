@@ -49,11 +49,11 @@ public class Client implements UserDetails {
     private Double revenue;
     @Column
     private LocalDate salesData;
-    @Lob
-    private byte[] excelFile;
-    @JsonManagedReference
+    @OneToMany(mappedBy = "clientOwner")
+    private List<Product> productsList;
     @OneToOne
-    private ExcelTable excelTable;
+    @JsonManagedReference
+    private ExcelFile excelFile;
 
 
     public Client(Long id, String clientName, String email, String password) {

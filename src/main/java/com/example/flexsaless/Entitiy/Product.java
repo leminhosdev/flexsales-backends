@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExcelTable {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,9 +19,8 @@ public class ExcelTable {
 
     private Double commission;
     private Double taxes;
-
-    @JsonBackReference
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client clientOwner;
 
 }
