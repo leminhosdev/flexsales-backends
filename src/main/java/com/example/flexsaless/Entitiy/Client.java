@@ -8,7 +8,11 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,6 +40,17 @@ public class Client implements UserDetails {
     @Column(nullable = false)
     private String clientArea;
 
+    @Column
+    private Integer sales;
+    @Column
+    private Double profit;
+    @Column
+    private Double revenue;
+    @Column
+    private LocalDate salesData;
+
+    @Column
+    private MultipartFile excelTable;
 
 
     @Override

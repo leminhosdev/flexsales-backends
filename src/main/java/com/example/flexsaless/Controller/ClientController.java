@@ -11,10 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 @CrossOrigin(origins ="http://localhost:4200")
 @RestController
 public class ClientController {
@@ -48,5 +47,20 @@ public class ClientController {
 
         var usuario = (Client) authenticate.getPrincipal();
         return tokenService.gerarToken(client);
+    }
+
+    @PutMapping("/uploadfile")
+    public ResponseEntity<String> uploadFile(@RequestParam("excel")MultipartFile file){
+      try{  this.clientService.uploadFile(file);
+        return ResponseEntity.ok("file saved!");
+    }catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving file.");
+    }
+    }
+
+    @GetMapping("/getloggeduser")
+    public Client getLoggedUser(){
+        Client loggedUser = this.clientService.getLoggedUser();
+        return loggedUser;
     }
 }
