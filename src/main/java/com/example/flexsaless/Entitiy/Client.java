@@ -1,5 +1,6 @@
 package com.example.flexsaless.Entitiy;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -48,10 +49,19 @@ public class Client implements UserDetails {
     private Double revenue;
     @Column
     private LocalDate salesData;
+    @Lob
+    private byte[] excelFile;
+    @JsonManagedReference
+    @OneToOne
+    private ExcelTable excelTable;
 
-    @Column
-    private MultipartFile excelTable;
 
+    public Client(Long id, String clientName, String email, String password) {
+        this.id = id;
+        this.clientName = clientName;
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

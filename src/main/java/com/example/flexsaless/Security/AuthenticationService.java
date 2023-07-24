@@ -18,6 +18,6 @@ public class AuthenticationService implements UserDetailsService {
                 orElseThrow(() -> new UsernameNotFoundException("Email not found"));
 
 
-        return new Client(client.getId(),client.getClientName(), client.getEmail(), client.getPassword(), client.getClientArea());
+        return new Client(client.getId(),client.getClientName(), client.getEmail(), client.getPassword());
     }
 }

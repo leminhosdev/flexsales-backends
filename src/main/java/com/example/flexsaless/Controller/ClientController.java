@@ -51,7 +51,7 @@ public class ClientController {
 
     @PutMapping("/uploadfile")
     public ResponseEntity<String> uploadFile(@RequestParam("excel")MultipartFile file){
-      try{  this.clientService.uploadFile(file);
+      try{  this.clientService.uploadFile();
         return ResponseEntity.ok("file saved!");
     }catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving file.");
@@ -60,7 +60,7 @@ public class ClientController {
 
     @GetMapping("/getloggeduser")
     public Client getLoggedUser(){
-        Client loggedUser = this.clientService.getLoggedUser();
-        return loggedUser;
+        Client user = this.clientService.getLoggedUser();
+        return user;
     }
 }

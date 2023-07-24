@@ -34,9 +34,9 @@ public class ClientService {
         return  this.clientRepository.save(client);
     }
 
-    public Client uploadFile(MultipartFile file){
+    public Client uploadFile(){
         Client clientLogged = getLoggedUser();
-        clientLogged.setExcelTable(file);
+
          return this.clientRepository.save(clientLogged);
     }
 }
