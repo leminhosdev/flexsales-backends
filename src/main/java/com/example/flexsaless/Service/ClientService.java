@@ -42,12 +42,19 @@ public class ClientService {
     }
 
     public ExcelFile uploadFile(MultipartFile file) throws IOException {
-        Client clientLogged = getLoggedUser();
-        String filename = file.getOriginalFilename();
-        ExcelFile excelFile = new ExcelFile(filename, file.getContentType(), file.getBytes(), clientLogged);
-        clientLogged.setExcelFile(excelFile);
-        ExcelFile savedFile = this.storageFileRepository.save(excelFile);
-        this.clientRepository.save(clientLogged);
-        return savedFile;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+            Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
+            Client client = currentUserNamee.get();
+
+            String filename = file.getOriginalFilename();
+            ExcelFile excelFile = new ExcelFile(filename, file.getContentType(), file.getBytes(), client);
+            client.setExcelFile(excelFile);
+            ExcelFile savedFile = this.storageFileRepository.save(excelFile);
+            this.clientRepository.save(client);
+            return savedFile;
+        }
+        return null;
     }
 }

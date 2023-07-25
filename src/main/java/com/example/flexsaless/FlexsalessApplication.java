@@ -10,17 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class FlexsalessApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(FlexsalessApplication.class, args);
 
 	}
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**");
-			}
-		};
-	}
+
 }

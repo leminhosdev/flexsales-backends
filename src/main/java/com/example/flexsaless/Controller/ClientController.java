@@ -14,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 @CrossOrigin(origins ="http://localhost:4200")
 @RestController
 public class ClientController {
@@ -29,7 +28,7 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-    @CrossOrigin(origins ="http://localhost:4200")
+
     @PostMapping("/register")
     public ResponseEntity<Client> save(@Valid @RequestBody Client client){
         String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword());
@@ -51,7 +50,8 @@ public class ClientController {
     }
 
     @PostMapping("/uploadfile")
-    public ExcelFile uploadFile(@RequestParam("excel")MultipartFile file) throws Exception{
+    @CrossOrigin(origins ="http://localhost:4200")
+    public ExcelFile uploadFile(@RequestParam("file")MultipartFile file) throws Exception{
      return clientService.uploadFile(file);
     }
 
