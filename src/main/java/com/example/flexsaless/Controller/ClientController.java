@@ -50,7 +50,6 @@ public class ClientController {
     }
 
     @PostMapping("/uploadfile")
-    @CrossOrigin(origins ="http://localhost:4200")
     public ExcelFile uploadFile(@RequestParam("file")MultipartFile file) throws Exception{
      return clientService.uploadFile(file);
     }
@@ -60,4 +59,6 @@ public class ClientController {
         Client user = this.clientService.getLoggedUser();
         return user;
     }
+
+
 }
