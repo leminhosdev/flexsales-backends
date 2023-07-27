@@ -3,6 +3,7 @@ package com.example.flexsaless.Entitiy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -17,6 +18,7 @@ public class ExcelFile {
     private String name;
     private String type;
     @Lob
+    @Column(length = 2000000)
     private byte[] data;
     @JsonBackReference
     @OneToOne
