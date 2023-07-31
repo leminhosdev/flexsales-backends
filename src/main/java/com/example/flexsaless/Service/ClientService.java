@@ -50,7 +50,7 @@ public class ClientService {
 
             String filename = file.getOriginalFilename();
             ExcelFile excelFile = new ExcelFile(filename, file.getContentType(), file.getBytes(), client);
-         //   client.setExcelFile(excelFile);
+           client.setExcelFile(excelFile);
             ExcelFile savedFile = this.storageFileRepository.save(excelFile);
             this.clientRepository.save(client);
             return savedFile;
