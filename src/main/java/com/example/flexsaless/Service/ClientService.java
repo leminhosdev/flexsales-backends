@@ -7,10 +7,7 @@ import com.example.flexsaless.Repository.ClientRepository;
 import com.example.flexsaless.Repository.ProductRepository;
 import com.example.flexsaless.Repository.StorageFileRepository;
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -74,25 +72,31 @@ public class ClientService {
 
                 List<Row> rows = (List<Row>) toList(sheet.iterator());
                 rows.remove(0);
+            DataFormatter formatter = new DataFormatter(Locale.US);
                 rows.forEach(row -> {
                     List<Cell> cells = (List<Cell>) toList(row.cellIterator());
 
-                    Product productReaded = Product.builder().code(cells.get(0).getStringCellValue())
-                            .name(cells.get(1).getStringCellValue())
-                            .commission(2.25)
-                            .taxes(4.55).build();
+                    String code = formatter.formatCellValue(cells.get(0));
+                    String name = formatter.formatCellValue(cells.get(1));
+                    BigDecimal commission = parseBigDecimal(cells.get(3));
+                    BigDecimal taxes = parseBigDecimal(cells.get(4));
+                    BigDecimal price = parseBigDecimal(cells.get(4));
 
+                    Product productReaded = Product.builder().code(code)
+                            .name(name)
+                            .price(price)
+                            .commission(commission)
+                            .taxes(taxes)
+                          .clientOwner(client).build();
                     productRepository.save(productReaded);
                     products.add(productReaded);
                 });
-
 
                 Iterator<Row> iterator = sheet.iterator();
 
                 client.setProductsList(products);
                 this.clientRepository.save(client);
                 return savedFile;
-
         }
       return null;
     }
@@ -100,5 +104,12 @@ public class ClientService {
     public List<?> toList(Iterator<?> iterator) {
         return IteratorUtils.toList(iterator);
     }
-
+    private BigDecimal parseBigDecimal(Cell cell) {
+        try {
+            return new BigDecimal(cell.getStringCellValue());
+        } catch (NumberFormatException e) {
+            // Em caso de erro na conversão, retorna BigDecimal.ZERO
+            return BigDecimal.ZERO;
+        }
+    }
 }

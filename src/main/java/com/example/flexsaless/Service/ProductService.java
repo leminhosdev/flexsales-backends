@@ -50,8 +50,8 @@ public class ProductService {
 
                 Product productReaded = Product.builder().code(cells.get(0).getStringCellValue())
                         .name(cells.get(1).getStringCellValue())
-                        .commission(cells.get(2).getNumericCellValue())
-                        .taxes(cells.get(3).getNumericCellValue()).build();
+                        .commission(null)
+                        .taxes(null).build();
 
 
                 products.add(productReaded);

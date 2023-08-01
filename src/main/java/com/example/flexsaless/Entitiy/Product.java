@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -19,10 +21,10 @@ public class Product {
     private String code;
     @Column(name = "name")
     private String name;
+    private BigDecimal price;
 
-
-    private Double commission;
-    private Double taxes;
+    private BigDecimal commission;
+    private BigDecimal taxes;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client clientOwner;

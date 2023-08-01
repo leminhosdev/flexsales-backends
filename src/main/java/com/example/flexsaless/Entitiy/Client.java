@@ -50,6 +50,7 @@ public class Client implements UserDetails {
     @Column
     private LocalDate salesData;
     @OneToMany(mappedBy = "clientOwner", fetch = FetchType.EAGER)
+    @Column
     private List<Product> productsList;
     @OneToOne
     @JsonManagedReference
