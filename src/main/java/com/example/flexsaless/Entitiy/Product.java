@@ -17,7 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String code;
-    private String description;
+    @Column(name = "name")
+    private String name;
+
 
     private Double commission;
     private Double taxes;

@@ -49,7 +49,8 @@ public class Client implements UserDetails {
     private Double revenue;
     @Column
     private LocalDate salesData;
-
+    @OneToMany(mappedBy = "clientOwner", fetch = FetchType.EAGER)
+    private List<Product> productsList;
     @OneToOne
     @JsonManagedReference
     private ExcelFile excelFile;

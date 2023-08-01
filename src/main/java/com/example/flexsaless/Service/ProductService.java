@@ -6,7 +6,8 @@ import com.example.flexsaless.Repository.ClientRepository;
 import com.example.flexsaless.Repository.StorageFileRepository;
 import lombok.Cleanup;
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -39,15 +40,26 @@ public class ProductService {
         byte[] fileBytes = table.get(0).getData();
 
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(fileBytes);
-             Workbook workbook = new HSSFWorkbook(inputStream)) {
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
 
             List<Row> rows = (List<Row>) toList(sheet.iterator());
 
-            toList(sheet.iterator());
+            rows.forEach(row ->{
+                List<Cell> cells = (List<Cell>) toList(row.cellIterator());
+
+                Product productReaded = Product.builder().code(cells.get(0).getStringCellValue())
+                        .name(cells.get(1).getStringCellValue())
+                        .commission(cells.get(2).getNumericCellValue())
+                        .taxes(cells.get(3).getNumericCellValue()).build();
+
+
+                products.add(productReaded);
+            });
 
 
             Iterator<Row> iterator = sheet.iterator();
+            return products;
         } catch (IOException e) {
             e.printStackTrace();
         }
