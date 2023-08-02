@@ -1,5 +1,7 @@
 package com.example.flexsaless.Entitiy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -23,6 +25,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("productsList")
 public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +54,7 @@ public class Client implements UserDetails {
     private LocalDate salesData;
     @OneToMany(mappedBy = "clientOwner", fetch = FetchType.EAGER)
     @Column
+    @JsonBackReference
     private List<Product> productsList;
     @OneToOne
     @JsonManagedReference

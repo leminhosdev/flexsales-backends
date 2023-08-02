@@ -1,6 +1,7 @@
 package com.example.flexsaless.Entitiy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -27,6 +28,7 @@ public class Product {
     private BigDecimal taxes;
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonManagedReference
     private Client clientOwner;
 
 }
