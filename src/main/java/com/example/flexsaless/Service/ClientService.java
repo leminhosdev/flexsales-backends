@@ -80,7 +80,7 @@ public class ClientService {
                     String name = formatter.formatCellValue(cells.get(1));
                     BigDecimal commission = parseBigDecimal(cells.get(3));
                     BigDecimal taxes = parseBigDecimal(cells.get(4));
-                    BigDecimal price = parseBigDecimal(cells.get(4));
+                    BigDecimal price = parseBigDecimal(cells.get(2));
 
                     Product productReaded = Product.builder().code(code)
                             .name(name)
