@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -44,10 +45,13 @@ public class ProductService {
 
             Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
             Client client = currentUserNamee.get();
-            return productRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCaseAndClientOwnerId(
+            List<Product> list = productRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCaseAndClientOwnerId(
                     keyWord, keyWord, client.getId()
             );
-
+            List<Product> filteredList = list.stream()
+                    .filter(product -> product.getClientOwner().getId() == client.getId())
+                    .collect(Collectors.toList());
+            return filteredList;
         }
         return null;
     }

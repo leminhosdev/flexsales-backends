@@ -26,9 +26,13 @@ public class Product {
 
     private BigDecimal commission;
     private BigDecimal taxes;
+
+    private Integer amount;
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonManagedReference
     private Client clientOwner;
+
+
 
 }
