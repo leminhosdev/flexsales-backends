@@ -1,6 +1,7 @@
 package com.example.flexsaless.Entitiy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
@@ -54,8 +55,12 @@ public class Client implements UserDetails {
     private LocalDate salesData;
     @OneToMany(mappedBy = "clientOwner", fetch = FetchType.EAGER)
     @Column
-    @JsonBackReference
+    @JsonManagedReference
     private List<Product> productsList;
+    @OneToMany(mappedBy = "clientOrderOwner", fetch = FetchType.EAGER)
+    @Column
+    @JsonManagedReference(value="orderList")
+    private List<OrderEntity> orderEntityList;
     @OneToOne
     @JsonManagedReference
     private ExcelFile excelFile;

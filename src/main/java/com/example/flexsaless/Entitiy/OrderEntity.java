@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,25 +15,25 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String code;
-    @Column(name = "name")
+    private LocalDate salesData;
+
+    private BigDecimal totalPrice;
+    private BigDecimal totalTaxesValue;
+    private BigDecimal totalCommissionValue;
+    private Integer productsAmount;
     private String name;
-    private BigDecimal price;
-
-    private BigDecimal commission;
-    private BigDecimal taxes;
-
-    private Integer amount;
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @JsonBackReference
-    private Client clientOwner;
+    @JsonBackReference(value="orderList")
+    private Client clientOrderOwner;
 
-    @ManyToOne
-    @JoinColumn(name = "orderEntity_id")
-    private OrderEntity orderEntity;
+
+    @OneToMany(mappedBy = "orderEntity", fetch = FetchType.EAGER)
+    @Column
+    private List<Product> productList;
+
 }
