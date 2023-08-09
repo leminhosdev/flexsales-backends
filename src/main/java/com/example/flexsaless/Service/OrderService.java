@@ -23,13 +23,14 @@ public class OrderService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public void save(OrderEntity orderEntity) {
+    public void save(OrderEntity orderEntity, List<Product> productList) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
 
             Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
             Client client = currentUserNamee.get();
             orderEntity.setClientOrderOwner(client);
+            orderEntity.setProductList(productList);
             List<OrderEntity> orderEntityList = new ArrayList<>();
             orderEntityList.add(orderEntity);
             client.setOrderEntityList(orderEntityList);
