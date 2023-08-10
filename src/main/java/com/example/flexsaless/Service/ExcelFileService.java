@@ -91,4 +91,30 @@ public class ExcelFileService {
             return BigDecimal.ZERO;
         }
     }
+
+    public void delete(){
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken))
+
+    {
+
+        Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
+        Client client = currentUserNamee.get();
+        ExcelFile excelFileTobeDeleted = client.getExcelFile();
+        client.setExcelFile(null);
+        List<Product> productsList = client.getProductsList();
+        client.setProductsList(null);
+        excelFileTobeDeleted.setClientOwner(null);
+
+        for(Product product: productsList){
+            this.productRepository.delete(product);
+        }
+
+        this.clientRepository.save(client);
+        this.storageFileRepository.save(excelFileTobeDeleted);
+
+        this.storageFileRepository.delete(excelFileTobeDeleted);
+    }
+
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class FlexsalessApplication {
 
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(FlexsalessApplication.class, args);
 
