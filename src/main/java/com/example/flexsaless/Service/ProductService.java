@@ -45,12 +45,15 @@ public class ProductService {
 
             Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
             Client client = currentUserNamee.get();
-            List<Product> list = productRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCaseAndClientOwnerId(
-                    keyWord, keyWord, client.getId()
-            );
-            List<Product> filteredList = list.stream()
-                    .filter(product -> product.getClientOwner().getId() == client.getId())
+            List<Product> productList = client.getProductsList(); // Obter a productList do cliente logado
+
+            List<Product> filteredList = productList.stream()
+                    .filter(product ->
+                            product.getName().toLowerCase().contains(keyWord.toLowerCase()) ||
+                                    product.getCode().toLowerCase().contains(keyWord.toLowerCase())
+                    )
                     .collect(Collectors.toList());
+
             return filteredList;
         }
         return null;

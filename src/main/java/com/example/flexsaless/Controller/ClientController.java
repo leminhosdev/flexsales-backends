@@ -71,18 +71,14 @@ public class ClientController {
         Client user = this.clientService.getLoggedUser();
         return user;
     }
-    @GetMapping("/testevalor")
-    public  List<Product> ddad() {
+    @GetMapping("/checkIfIsLogged")
+    public  boolean checkIfIsLogged() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
 
-            Optional<Client> currentUserNamee = (Optional<Client>) authentication.getPrincipal();
-            Client client = currentUserNamee.get();
-            List<OrderEntity> orderEntityList = client.getOrderEntityList();
-            List<Product> productList = orderEntityList.get(0).getProductList();
-            return productList;
+           return true;
         }
-        return null;
+        return false;
     }
 
 

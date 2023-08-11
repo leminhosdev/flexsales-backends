@@ -26,7 +26,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties("productsList")
+
+
 public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
