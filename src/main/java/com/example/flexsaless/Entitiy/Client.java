@@ -46,14 +46,7 @@ public class Client implements UserDetails {
     @Column(nullable = false)
     private String clientArea;
 
-    @Column
-    private Integer sales;
-    @Column
-    private Double profit;
-    @Column
-    private Double revenue;
-    @Column
-    private LocalDate salesData;
+
     @OneToMany(mappedBy = "clientOwner", fetch = FetchType.EAGER)
     @Column
     @JsonManagedReference
