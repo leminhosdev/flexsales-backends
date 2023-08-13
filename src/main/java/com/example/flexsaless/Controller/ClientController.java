@@ -71,15 +71,6 @@ public class ClientController {
         Client user = this.clientService.getLoggedUser();
         return user;
     }
-    @GetMapping("/checkIfIsLogged")
-    public  boolean checkIfIsLogged() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-
-           return true;
-        }
-        return false;
-    }
 
 
 
