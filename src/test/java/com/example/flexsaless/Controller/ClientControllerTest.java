@@ -66,6 +66,5 @@ public class ClientControllerTest {
         Assertions.assertNotNull(savedClient);
         Assertions.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         Assertions.assertEquals(clientSaved.getEmail(), savedClient.getEmail());
-
     }
 }
