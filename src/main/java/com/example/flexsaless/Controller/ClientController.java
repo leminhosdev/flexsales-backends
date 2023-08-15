@@ -37,8 +37,9 @@ public class ClientController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.clientService = clientService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/register")
