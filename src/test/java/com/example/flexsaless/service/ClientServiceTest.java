@@ -1,40 +1,29 @@
 package com.example.flexsaless.service;
 
-import com.example.flexsaless.Controller.ClientController;
+import com.example.flexsaless.Controller.ClientControllerTest;
 import com.example.flexsaless.Entitiy.Client;
 import com.example.flexsaless.Repository.ClientRepository;
 import com.example.flexsaless.Repository.ProductRepository;
 import com.example.flexsaless.Repository.StorageFileRepository;
 import com.example.flexsaless.Security.TokenService;
 import com.example.flexsaless.Service.ClientService;
-import lombok.Builder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Collection;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.CREATED;
 
 @ExtendWith(MockitoExtension.class)
 public class ClientServiceTest {
     @InjectMocks
     ClientService clientService;
     @InjectMocks
-    private ClientController clientController;
+    private ClientControllerTest clientController;
     @Mock
     ClientRepository clientRepository;
     @Mock
