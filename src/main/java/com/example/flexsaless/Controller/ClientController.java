@@ -57,7 +57,6 @@ public class ClientController {
 
         Authentication authenticate = this.authenticationManager
                 .authenticate(usernamePasswordAuthenticationToken);
-
         var usuario = (Client) authenticate.getPrincipal();
         return tokenService.gerarToken(client);
     }
